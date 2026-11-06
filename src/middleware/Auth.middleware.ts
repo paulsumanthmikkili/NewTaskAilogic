@@ -1,0 +1,13 @@
+import type { FastifyReply, FastifyRequest } from "fastify";
+
+export default async function authMiddleware(request:FastifyRequest,reply:FastifyReply) {
+    try{
+        await request.jwtVerify();
+    }
+    catch(err){
+    return reply.status(401).send({
+      success: false,
+      message: "Unauthorized: Invalid or expired token",
+    });
+    }
+}
